@@ -102,7 +102,7 @@ namespace Papercut.Infrastructure.Smtp
                 .ServerName(this._applicationMetaData.AppName)
                 .Endpoint(
                     new EndpointDefinitionBuilder()
-                        .Endpoint(smtpEndpoint.ToIPEndPoint())
+                        .WithEndpoint(smtpEndpoint)
                         .IsSecure(false)
                         .AllowUnsecureAuthentication(false)
                         .Build());

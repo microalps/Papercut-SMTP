@@ -20,6 +20,7 @@ namespace Papercut.Core.Domain.Network
 {
     using System;
     using System.Net;
+    using System.Security.Cryptography.X509Certificates;
 
     public class EndpointDefinition
     {
@@ -29,8 +30,22 @@ namespace Papercut.Core.Domain.Network
             Port = port;
         }
 
+        public EndpointDefinition(string address, int port, X509FindType certificateFindType, string certificateFindValue) : this(address, port)
+        {
+            X509Store store = new X509Store("MY", StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+            var certificates = store.Certificates.Find(certificateFindType, certificateFindValue, false);
+            if (certificates.Count != 1)
+            {
+                throw new Exception("Certificate Not Found");
+            }
+            Certificate = certificates[0];
+            store.Close();
+        }
+
         public IPAddress Address { get; }
         public int Port { get; }
+        public X509Certificate Certificate { get; }
 
         public IPEndPoint ToIPEndPoint()
         {

@@ -19,6 +19,7 @@
 namespace Papercut.AppLayer.SmtpServers
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -108,7 +109,10 @@ namespace Papercut.AppLayer.SmtpServers
             try
             {
                 await this._smtpServer.StopAsync();
-                await this._smtpServer.StartAsync(new EndpointDefinition(Settings.Default.IP, Settings.Default.Port));
+                var endpoint = string.IsNullOrEmpty(Settings.Default.CertificateFindValue)
+                    ? new EndpointDefinition(Settings.Default.IP, Settings.Default.Port)
+                    : new EndpointDefinition(Settings.Default.IP, Settings.Default.Port, (X509FindType)Enum.Parse(typeof(X509FindType), Settings.Default.CertificateFindType, true), Settings.Default.CertificateFindValue);
+                await this._smtpServer.StartAsync(endpoint);
                 await this._messageBus.PublishAsync(new SmtpServerBindEvent(Settings.Default.IP, Settings.Default.Port));
             }
             catch (Exception ex)

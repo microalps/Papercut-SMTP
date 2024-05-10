@@ -228,5 +228,29 @@ namespace Papercut.Properties {
                 this["ShowNotifications"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FindByThumbprint")]
+        public string CertificateFindType {
+            get {
+                return ((string)(this["CertificateFindType"]));
+            }
+            set {
+                this["CertificateFindType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateFindValue {
+            get {
+                return ((string)(this["CertificateFindValue"]));
+            }
+            set {
+                this["CertificateFindValue"] = value;
+            }
+        }
     }
 }

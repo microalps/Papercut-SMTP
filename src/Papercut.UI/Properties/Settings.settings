@@ -53,5 +53,11 @@
     <Setting Name="ShowNotifications" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="CertificateFindType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FindByThumbprint</Value>
+    </Setting>
+    <Setting Name="CertificateFindValue" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

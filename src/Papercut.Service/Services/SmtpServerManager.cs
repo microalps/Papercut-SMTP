@@ -18,6 +18,7 @@
 namespace Papercut.Service.Services
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -77,8 +78,10 @@ namespace Papercut.Service.Services
             try
             {
                 await this._smtpServer.StopAsync();
-                await this._smtpServer.StartAsync(
-                    new EndpointDefinition(this._serviceSettings.IP, this._serviceSettings.Port));
+                var endpoint = string.IsNullOrEmpty(_serviceSettings.CertificateFindValue)
+                    ? new EndpointDefinition(_serviceSettings.IP, _serviceSettings.Port)
+                    : new EndpointDefinition(_serviceSettings.IP, _serviceSettings.Port, (X509FindType)Enum.Parse(typeof(X509FindType), _serviceSettings.CertificateFindType, true), _serviceSettings.CertificateFindValue);
+                await this._smtpServer.StartAsync(endpoint);
             }
             catch (Exception ex)
             {

@@ -23,6 +23,18 @@ namespace Papercut.Service.Helpers
     {
         public ISettingStore Settings { get; set; }
 
+        public string CertificateFindType
+        {
+            get => Settings.GetOrSet("CertificateFindType", "FindByThumbprint", "Certificate Find Type.");
+            set { if (CertificateFindType != value) Settings.Set("CertificateFindType", value); }
+        }
+
+        public string CertificateFindValue
+        {
+            get => Settings.GetOrSet("CertificateFindValue", "", "Certificate Find Value.");
+            set { if (CertificateFindValue != value) Settings.Set("CertificateFindValue", value); }
+        }
+
         public string IP
         {
             get => Settings.GetOrSet("IP", "Any", "SMTP Server listening IP. 'Any' is the default and it means '0.0.0.0'.");
